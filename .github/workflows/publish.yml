@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
+      - run: npm install
       - run: npx tsc
       - run: |
           git config user.email "actions@github.com"
