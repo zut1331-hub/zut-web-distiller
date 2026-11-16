@@ -1,0 +1,32 @@
+name: publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version (e.g. 0.1.1)"
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci
+      - run: npx tsc
+      - run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          git add package.json
+          git commit -m "v${{ github.event.inputs.version }}"
+          git tag "v${{ github.event.inputs.version }}"
+          git push
+          git push --tags
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
