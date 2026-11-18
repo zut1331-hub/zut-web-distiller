@@ -1,6 +1,6 @@
 {
   "name": "zut-web-distiller",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local MCP server that strips junk HTML and compresses web pages for AI agents, with optional caching through the ZUT Agent Network.",
   "type": "module",
   "bin": {
